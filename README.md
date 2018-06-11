@@ -1,6 +1,7 @@
 # NMSSH [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 NMSSH is a clean, easy-to-use, unit tested framework for iOS and OSX that wraps libssh2.
+** libssh2 compiled with commit 62b825c8afb9e5efb6ea9c05b40b309590249fb6 **
 
 ## Questions & Issues
 

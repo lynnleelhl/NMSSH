@@ -62,6 +62,10 @@ typedef NS_ENUM(NSInteger, NMSSHKnownHostStatus) {
  */
 @property (nonatomic, readonly) NMSSHHostConfig *hostConfig;
 
+@property (nonatomic, readonly) dispatch_queue_t sshSerialQueue;
+
++ (instancetype)sharedInstance;
+
 /// ----------------------------------------------------------------------------
 /// @name Initialize a new SSH session
 /// ----------------------------------------------------------------------------

@@ -18,9 +18,22 @@
 @property (nonatomic, strong) NSNumber *port;
 @property (nonatomic, strong) NMSSHHostConfig *hostConfig;
 @property (nonatomic, assign) LIBSSH2_SESSION *sessionToFree;
+
 @end
 
 @implementation NMSSHSession
+
+@synthesize sshSerialQueue = _sshSerialQueue;
+
++ (instancetype)sharedInstance
+{
+    static id _sharedInstance = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        _sharedInstance = [[self alloc] init];
+    });
+    return _sharedInstance;
+}
 
 // -----------------------------------------------------------------------------
 #pragma mark - INITIALIZE A NEW SSH SESSION
@@ -101,6 +114,15 @@
     }
 
     return [NSURL URLWithString:[@"ssh://" stringByAppendingString:host]];
+}
+
+- (dispatch_queue_t)sshSerialQueue {
+    
+    if (!_sshSerialQueue) {
+        _sshSerialQueue = dispatch_queue_create("NMSSH.queue.serial", DISPATCH_QUEUE_SERIAL);
+    }
+
+    return _sshSerialQueue;
 }
 
 - (void)dealloc {

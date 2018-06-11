@@ -324,8 +324,9 @@
 #endif
 
     [self setLastResponse:nil];
-    [self setSource:dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, CFSocketGetNative([self.session socket]),
-                                           0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0))];
+//    [self setSource:dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, CFSocketGetNative([self.session socket]),
+//                                           0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0))];
+    [self setSource:dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, CFSocketGetNative([self.session socket]), 0, [NMSSHSession sharedInstance].sshSerialQueue)];
     dispatch_source_set_event_handler(self.source, ^{
         NMSSHLogVerbose(@"Data available on the socket!");
         ssize_t rc, erc=0;
